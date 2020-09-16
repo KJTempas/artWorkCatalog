@@ -10,7 +10,14 @@ def main():
         if choice.upper() == 'Q':
             break
 
-def creat_menu():
+def create_menu():
     menu = Menu()
     menu.add_option('1', 'Add New Artist', add_artist)
     menu.add_option('2', 'Add Artwork', add_artwork)
+    menu.add_option('3', 'Display available work by one artist', display_available_art)
+    menu.add_option('4', 'Show all work by one artist', show_all_by_one_artist)
+    menu.add_option('5', 'Change availability status of artwork', change_availability)
+    menu.add_option('6', 'Delete an artwork', delete_artwork)
+    menu.add_option('7', 'Quit', quit_program)
+
+    return menu
