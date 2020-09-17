@@ -1,7 +1,11 @@
+from artwork import Artist, Artwork
+#from menu import Menu
+
+import art_ui
 
 
 def main():
-    menu = creat_menu()
+    menu = create_menu()
 
     while True:
         choice = ui.display_menu_get_choice(menu)
@@ -21,3 +25,5 @@ def create_menu():
     menu.add_option('7', 'Quit', quit_program)
 
     return menu
+
+    
