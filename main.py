@@ -8,7 +8,7 @@ def main():
     menu = create_menu()
 
     while True:
-        choice = ui.display_menu_get_choice(menu)
+        choice = art_ui.display_menu_get_choice(menu)
         action = menu.get_action(choice)
         action()
         if choice.upper() == 'Q':
@@ -26,4 +26,9 @@ def create_menu():
 
     return menu
 
-    
+def add_artist():
+    try:
+        new_artist = art_ui.get_artist_info() #go to art_ui method and return w/ new Artist object
+        new_artist.save()
+    except Exception as e:
+        art_ui.message('Error: Artist Already on File')
