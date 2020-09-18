@@ -12,7 +12,7 @@ class Artist(Model):
         database = db
 
     def __str__(self):
-        return f'The artist {self.name} with contact info {self.email} is in the artworks catalog.'
+        return f'Artist ID: {self.id}, Name: {self.name} Email: {self.email}'
 
 
 class Artwork(Model):
