@@ -36,7 +36,7 @@ class ArtControllerTest(TestCase):
         controller.add_artist()#try to add artist again
         artist_count = Artist.select().count() #count # of artists in mock dbase
         self.assertEqual(1, artist_count)  #should be only one - so duplicate not added
-
+ 
 
 
 
