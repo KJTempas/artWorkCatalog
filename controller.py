@@ -16,8 +16,14 @@ def add_artwork():
     pass
 
 
-def display_available_work_by_an_artist():
-    pass
+def display_all_available_by_artist():
+    name = ui.get_string('Enter name of artist - First Last')
+    try: #find the artist, then use the artist.id to get works
+        artist = database.find_artist(name)
+        print(artist)
+        database.display_all_avail_by_artist(artist)
+    except ArtError as e:
+        print(e)
 
 
 def show_all_by_one_artist():

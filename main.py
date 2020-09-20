@@ -9,7 +9,9 @@ def main():
             controller.add_artist()
         elif choice == '2':
             controller.add_artwork()
-        elif choice == 7:
+        elif choice == '3':
+            controller.display_all_available_by_artist()
+        elif choice == '7':
             break
 
 
