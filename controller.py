@@ -13,7 +13,15 @@ def add_artist():
         print(e)
 
 def add_artwork():
-    pass
+    name = ui.get_string('Enter name of artwork: ')
+    price = ui.get_positive_float('Enter the price for this piece of art: ')
+    artist = ui.get_string('Enter name of artist -First Last: ')
+
+    try:
+        database.add_artwork(name, price, artist)
+        print('Added artwork')
+    except ArtError as e:
+        print(e)
 
 
 def display_available_work_by_an_artist():

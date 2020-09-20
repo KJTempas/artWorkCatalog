@@ -19,7 +19,16 @@ def get_string(question, max_length=None):
             return response
         print('Empty responses are not allowed. Please enter a string. ')
 
-
+def get_positive_float(question):
+    while True:
+        try:
+            response = float(input(f'{question}: '))
+            if response >=0:
+                return response
+            else:
+                print('Please enter a positive number')
+        except ValueError:
+            print('Please enter a number')
 
 
 
