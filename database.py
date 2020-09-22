@@ -17,5 +17,10 @@ def add_artwork(name, price, artist):
     except ArtError as e:
         print(e)
 
+def delete_artwork(artwork):
+    rows_deleted = Artwork.delete().where (Artwork.name == artwork.name).execute()
+    if not rows_deleted:
+        raise ArtError('Tried to delete artwork that does not exist')
+
 class ArtError(Exception):
     pass

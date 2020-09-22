@@ -3,10 +3,11 @@ def menu_choice():
         print("""
 1 to add Artist
 2 to add Artwork
+6 to delete Artwork
 7 to quit
        """)
         response = get_string('Enter choice? ')
-        if response in ['1','2','7']:
+        if response in ['1','2','6','7']:
             return response
         print('Invalid choice.  Please select one of the options.')
 
@@ -32,6 +33,7 @@ def get_positive_float(question):
 
 
 
-#def message(msg):
+
+def message(msg):
  #   """ prints a message for the user"""
-  #  print(msg)
+    print(msg)
