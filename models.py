@@ -5,7 +5,6 @@ db = SqliteDatabase('art.sqlite') #creating an instance of a database
 class Artist(Model):
     name = CharField(unique=True) #fields in artist table
     email = CharField(unique=True)
-    #id = IntegerField()  ? but is autoassigned
 
     #link this model to art dbase
     class Meta:
@@ -16,9 +15,9 @@ class Artist(Model):
 
 
 class Artwork(Model):
-    artist = ForeignKeyField(Artist)# , backref='artworks') #not sure about backrefs 
-    #artworkid - autoincrement?
-    name_of_artwork = CharField()   #unique
+    artist = ForeignKeyField(Artist , backref='artworks') #not sure about backrefs 
+    #artwork id will be generated, since no primary key is specified
+    name = CharField()   
     price = DecimalField(9,2)
     is_available = BooleanField(default=True)
 
@@ -26,7 +25,7 @@ class Artwork(Model):
         database = db
     
     def __str__(self):
-        return f'{self.name_of_artwork} is {self.is_available} available for {self.price}'
+        return f'{self.name} is available -{self.is_available} for {self.price}'
 
 #connect to DB and create tables that map to models Artist and Artwork
 db.connect()
