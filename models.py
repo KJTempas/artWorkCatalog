@@ -23,7 +23,7 @@ class Artwork(Model):
 
     class Meta:
         database = db
-        constraints = [SQL('UNIQUE ( name COLLATE NOCASE, artist COLLATE NOCASE)')]
+       # constraints = [SQL('UNIQUE ( name COLLATE NOCASE, artist COLLATE NOCASE)')]
     
     def __str__(self):
         return f'{self.name} is available -{self.is_available} for {self.price}'

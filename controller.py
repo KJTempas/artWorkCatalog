@@ -42,12 +42,6 @@ def delete_artwork():
 
 def quit_program():
     ui.message('Thanks and bye!')
+    
 
 
-
-class Artist:
-    """represents one artist"""
-
-    def __init__(self, name, email):
-        self.name = name
-        self.email = email
