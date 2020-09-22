@@ -9,6 +9,8 @@ def main():
             controller.add_artist()
         elif choice == '2':
             controller.add_artwork()
+        elif choice == '3':
+            controller.change_availability()
         elif choice == '6':
             controller.delete_artwork()
         elif choice == 7:

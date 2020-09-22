@@ -36,10 +36,15 @@ def show_all_by_one_artist():
     pass
 
 def change_availability():
-    pass
-    #artwork_id = art_ui.get_artwork_id()
-    #artwork = artwork.get_artwork_by_id(artwork_id)
-
+    name = ui.get_string('Enter name of artwork to change availability')
+    name = name.title()
+    artwork = get_artwork_by_name(name)
+    try:
+        database.change_availability(artwork) #send to database to delete that artowrk
+        print('Changed availability')
+    except ArtError as e:
+        print(e)
+    
 
 def delete_artwork():
     name = ui.get_string('Enter name of artwork to delete')

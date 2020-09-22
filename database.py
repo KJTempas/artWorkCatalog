@@ -17,6 +17,12 @@ def add_artwork(name, price, artist):
     except ArtError as e:
         print(e)
 
+def change_availability(artwork):
+    rows_updated = Artwork.update(is_available = False).where(Artwork.name == artwork.name).execute()
+    if not rows_updated:
+        raise ArtError('Artwork is already sold')
+
+
 def delete_artwork(artwork):
     rows_deleted = Artwork.delete().where (Artwork.name == artwork.name).execute()
     if not rows_deleted:
