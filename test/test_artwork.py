@@ -1,52 +1,42 @@
 from unittest import TestCase
 import os
+import database_config
+import database
 
-#import database_config
-#database_config.database_path = 'database/test_art.sqlite'
+#change database path to test_art.sqlite
+database_config.database_path = 'test_art.sqlite'
 
 import controller
-from models import Artist, Artwork, ArtError
+from models import Artist, Artwork
+from database import ArtError
 
 class TestArtwork(TestCase):
-    @classmethod
-    def setUpClass(cls):   
-        #name used in testing =#swap real db, with test db
-        #artstore.db =os.path.join('art.sqlite', 'test_art.sqlite')
-        
-       # controller.db = os.path.join('database', 'test_art.slite')
-        Artstore.instance=None#?clearing out previously used test dbase
-        
-
+    
     def setUp(self):
-        self.AS = Artstore() #create new instance of test-dbase?
-        self.clear_artstore()  #and clear it
-
+        # connect to dbase and delete from dbase
+        Artist.delete() #deletes everything in the table
+        Artwork.delete()
+        
 
     def add_test_data(self): #helper/utility method
-        self.clear_artstore()  #clear the test dbase
-
-        #which of these 2 do I do?
-        self.artist1=Artist('Auguste Rodin', 'ar@gmail.com')
+    
         self.artist1 = Artist(name = 'Auguste Rodin', email = 'ar@gmail.com')
         
-        self.artist2 = Artist('Paul Cezanne', 'pc@gmail.com')
+        self.artist2 = Artist(name = 'Paul Cezanne', email = 'pc@gmail.com')
         self.artist1.save()
         self.artist2.save()
         
-        self.artwork1 = Artwork('The Thinker', 500, artist1)
+        self.artwork1 = Artwork(name = 'The Thinker', price = 500, artist = self.artist1)
         self.artwork1.save()
-        self.artwork2 = Artwork('The Bathers', 600, artist2)
+        self.artwork2 = Artwork(nbame = 'The Bathers', price =600, artist = self.artist2)
         self.artwork2.save()
 
-    def clear_artstore(self): #another helpermethod
-        self.AS.delete_all_artists()
-        self.AS.delete_all_artwork()
-
+    
 
     def test_add_artist(self):
-        artist = Artist('Nicole Tempas', 'nt@gmail.com')
+        artist = Artist(name = 'Nicole Tempas', email = 'nt@gmail.com')
         artist.save()
-        self.assertEqual(1, self.AS.artist_count())
+        self.assertEqual(1, database.artist_count())
         
 #?????/would this be 3 because setup already added 2 artists?
         #test adding duplicate raises error?

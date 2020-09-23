@@ -15,7 +15,7 @@ def main():
             controller.show_all_artwork_by_one_artist()
         elif choice == '6':
             controller.delete_artwork()
-        elif choice == 7:
+        elif choice == '7':
             break
 
 

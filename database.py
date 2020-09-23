@@ -1,13 +1,10 @@
 from peewee import *
 from models import Artist, Artwork
 
-#db = SqliteDatabase('artworks.sqlite')
 
 def add_artist(name, email):
     try:
         Artist(name = name, email = email).save()
-       # new_id =    lastrowid
-        #artist.id=new_id
     except IntegrityError as e:
         raise ArtError('Error adding artist because ' + str(e))
 
@@ -38,13 +35,13 @@ def delete_artwork(artwork):
     if not rows_deleted:
         raise ArtError('Tried to delete artwork that does not exist')
 
-def artist_count(Artist):
+def artist_count():
     #return number of artist in dbase
     num_of_artists = Artist.select().count()
     #return Artist.select().count()
     return num_of_artists
 
-def artwork_count_all(Artwork):
+def artwork_count_all():
     return Artwork.select().count()
 
 class ArtError(Exception):

@@ -1,6 +1,6 @@
 from peewee import *
-
-db = SqliteDatabase('art.sqlite') #creating an instance of a database
+from database_config import database_path
+db = SqliteDatabase(database_path) #creating an instance of a database
 
 class Artist(Model):
     name = CharField(unique=True) #fields in artist table
