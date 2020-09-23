@@ -4,6 +4,7 @@ db = SqliteDatabase('art.sqlite') #creating an instance of a database
 
 class Artist(Model):
     name = CharField(unique=True) #fields in artist table
+    #how/where to add NOCASE
     email = CharField(unique=True)
 
     #link this model to art dbase

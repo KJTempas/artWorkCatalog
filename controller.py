@@ -77,7 +77,14 @@ def get_artwork_by_name(name):
 
 def get_artist_by_name(name):
     return Artist.get_or_none(Artist.name == name)
+"""
+def artist_count():
+    #return number of artist in dbase
+    return Artist.select().count()
 
+def artwork_count_all():
+    return Artwork.select().count()
+"""
 def quit_program():
     ui.message('Thanks and bye!')
     

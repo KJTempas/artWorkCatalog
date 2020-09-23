@@ -57,3 +57,5 @@ class ArtDatabaseTest(TestCase)
         Artist(name='Molly Brown', email = 'mbrown@gmail.com'.save()
         with self.assertRaises(ArtError): #trying to add molly again should raise an derror
             database.add_artist('Molly Brown', 'mbrown@gmail.com')
+
+

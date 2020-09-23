@@ -38,5 +38,14 @@ def delete_artwork(artwork):
     if not rows_deleted:
         raise ArtError('Tried to delete artwork that does not exist')
 
+def artist_count(Artist):
+    #return number of artist in dbase
+    num_of_artists = Artist.select().count()
+    #return Artist.select().count()
+    return num_of_artists
+
+def artwork_count_all(Artwork):
+    return Artwork.select().count()
+
 class ArtError(Exception):
     pass
