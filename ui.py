@@ -4,11 +4,12 @@ def menu_choice():
 1 to add Artist
 2 to add Artwork
 3 to change Availability to Sold
+4 to show all Artwork by one Artist
 6 to delete Artwork
 7 to quit
        """)
         response = get_string('Enter choice? ')
-        if response in ['1','2','3','6','7']:
+        if response in ['1','2','3','4', '6','7']:
             return response
         print('Invalid choice.  Please select one of the options.')
 
