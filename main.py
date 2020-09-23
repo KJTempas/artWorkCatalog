@@ -13,6 +13,8 @@ def main():
             controller.change_availability()
         elif choice == '4':
             controller.show_all_artwork_by_one_artist()
+        elif choice == '5':
+            controller.display_available_work_by_an_artist()
         elif choice == '6':
             controller.delete_artwork()
         elif choice == '7':

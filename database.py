@@ -17,7 +17,7 @@ def add_artwork(name, price, artist):
 
 def show_artwork_by_one_artist(artist):
     try:
-        artworks = Artwork.select().where(Artist.id == artist.id)
+        artworks = Artwork.select().where(artist.id == artist.id)
         return artworks
         #return Artwork.get_or_none(Artist.id == artist_id)
     except ArtError as e:
@@ -29,6 +29,12 @@ def change_availability(artwork):
     if not rows_updated:
         raise ArtError('Artwork is already sold')
 
+def display_avail_by_artist(artist):
+    try:
+        artworks = Artwork.select().where(artist.id==artist.id) and (Artwork.is_available == True)
+        return artworks
+    except ArtError as e:
+        print(e)
 
 def delete_artwork(artwork):
     rows_deleted = Artwork.delete().where (Artwork.name == artwork.name).execute()

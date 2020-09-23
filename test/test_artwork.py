@@ -13,7 +13,7 @@ from database import ArtError
 class TestArtwork(TestCase):
     
     def setUp(self):
-        # connect to dbase and delete from dbase
+        # connect to dbase and delete from dbase all data in each table
         Artist.delete() #deletes everything in the table
         Artwork.delete()
         
@@ -36,10 +36,9 @@ class TestArtwork(TestCase):
     def test_add_artist(self):
         artist = Artist(name = 'Nicole Tempas', email = 'nt@gmail.com')
         artist.save()
-        self.assertEqual(1, database.artist_count())
+        self.assertEqual(1, Artist.select().count())
         
-#?????/would this be 3 because setup already added 2 artists?
-        #test adding duplicate raises error?
+
 """
     def test_create_artwork_default_available_yes(self):
         artist = Artist('Auguste Rodin', 'ar@gmail.com')

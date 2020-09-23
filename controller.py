@@ -30,7 +30,19 @@ def add_artwork():
 
 
 def display_available_work_by_an_artist():
-    pass
+    name = ui.get_string('Enter name of artist: ')
+    name = name.title()
+    artist = get_artist_by_name(name)
+    try:
+        artworks = database.display_avail_by_artist(artist)
+        if artworks:
+            for row in artworks:
+                print(row)
+        else:
+            raise ArtError('There are no available pieces of art by this artist on file')
+
+    except ArtError as e:
+        print(e)
 
 def show_all_artwork_by_one_artist():
     name = ui.get_string('Enter name of artist whose work you would like to see: ')
@@ -43,7 +55,7 @@ def show_all_artwork_by_one_artist():
             for row in artworks:
                 print(row)
         else:
-            raise ArtError('There are artworks by this artist on file')
+            raise ArtError('There are no pieces of art by this artist on file')
     except ArtError as e:
         print(e)
 
