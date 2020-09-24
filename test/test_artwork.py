@@ -6,15 +6,8 @@ import database_config
 #change database path to test_art.sqlite
 database_config.database_path = 'test_art.sqlite'
 
-<<<<<<< HEAD
 import database
 
-=======
-
-import database
-
-
->>>>>>> 6b9950d4a53b1d34813feb30a5a1314ab5086aeb
 import controller
 from models import Artist, Artwork
 from database import ArtError, IntegrityError
