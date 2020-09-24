@@ -1,10 +1,14 @@
 from unittest import TestCase
 import os
 import database_config
-import database
+
 
 #change database path to test_art.sqlite
 database_config.database_path = 'test_art.sqlite'
+
+
+import database
+
 
 import controller
 from models import Artist, Artwork
