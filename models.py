@@ -1,6 +1,8 @@
 from peewee import *
-from database_config import database_path
-db = SqliteDatabase(database_path) #creating an instance of a database
+import database_config
+db = SqliteDatabase(database_config.database_path) #creating an instance of a database
+
+print('THE DATABASE USED IS ' + database_config.database_path)  # just checking! You can remove this.
 
 class Artist(Model):
     name = CharField(unique=True) #fields in artist table
