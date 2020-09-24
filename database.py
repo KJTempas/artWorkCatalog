@@ -16,8 +16,13 @@ def add_artwork(name, price, artist):
         print(e)
 
 def show_artwork_by_one_artist(artist):
+    #print(artist) #works- prints object
+    #print(artist.id) #works - prints id of that artist
     try:
-        artworks = Artwork.select().where(artist.id == artist.id)
+        #artworks = Artwork.select().where(Artwork.artist_id.id==artist.id) #no such colum t2.id
+        artworks = Artwork.select().where(Artwork.artist_id==artist.id) #there are no pieces of art by this artist on file
+        
+
         return artworks
         #return Artwork.get_or_none(Artist.id == artist_id)
     except ArtError as e:
@@ -31,7 +36,12 @@ def change_availability(artwork):
 
 def display_avail_by_artist(artist):
     try:
-        artworks = Artwork.select().where(artist.id==artist.id) and (Artwork.is_available == True)
+       # artworks = Artwork.select().where(artist.id==artist) and (Artwork.is_available == True) #artist_id is not defined
+        artworks = Artwork.select().where(Artwork.artist_id==artist.id) and (Artwork.is_available == True) #same error as above
+        #artworks = Artwork.select().where(Artwork.artist_id==artist.id) and (Artwork.is_available == True)
+        #artworks = Artwork.select().where(Artwork.artist_id==artist.id) and (Artwork.is_available == True)
+        #artworks = Artwork.select().where(Artwork.artist_id==artist.id) and (Artwork.is_available == True)
+        #artworks = Artwork.select().where(Artwork.artist_id==artist.id) and (Artwork.is_available == True)
         return artworks
     except ArtError as e:
         print(e)

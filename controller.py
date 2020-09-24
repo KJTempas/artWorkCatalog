@@ -30,9 +30,10 @@ def add_artwork():
 
 
 def display_available_work_by_an_artist():
-    name = ui.get_string('Enter name of artist: ')
+    name = ui.get_string('Enter name of artist ')
     name = name.title()
     artist = get_artist_by_name(name)
+    print(artist)
     try:
         artworks = database.display_avail_by_artist(artist)
         if artworks:
@@ -45,7 +46,7 @@ def display_available_work_by_an_artist():
         print(e)
 
 def show_all_artwork_by_one_artist():
-    name = ui.get_string('Enter name of artist whose work you would like to see: ')
+    name = ui.get_string('Enter name of artist whose work you would like to see ')
     name = name.title()
     artist = get_artist_by_name(name) #retrieve artist object 
     print(artist)
@@ -89,14 +90,7 @@ def get_artwork_by_name(name):
 
 def get_artist_by_name(name):
     return Artist.get_or_none(Artist.name == name)
-"""
-def artist_count():
-    #return number of artist in dbase
-    return Artist.select().count()
 
-def artwork_count_all():
-    return Artwork.select().count()
-"""
 def quit_program():
     ui.message('Thanks and bye!')
     
