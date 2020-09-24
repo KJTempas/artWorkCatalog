@@ -12,8 +12,8 @@ def add_artist(name, email):
 def add_artwork(name, price, artist):
     try:
         Artwork.create(artist = artist, name = name, price = price)
-    except ArtError as e:
-        print(e)
+    except IntegrityError as e:
+        raise ArtError('Error adding artwork because ' + str(e))
 
 def show_artwork_by_one_artist(artist):
     #print(artist) #works- prints object
