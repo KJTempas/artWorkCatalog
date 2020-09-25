@@ -1,17 +1,10 @@
 from peewee import *
-<<<<<<< HEAD
 import database_config 
 db = SqliteDatabase(database_config.database_path) #creating an instance of a database
 #creating an instance of a database
 #check and remove later
 print('THE DATABASE USED IS ' + database_config.database_path)
-=======
-import database_config
-db = SqliteDatabase(database_config.database_path) #creating an instance of a database
 
-print('THE DATABASE USED IS ' + database_config.database_path)  # just checking! You can remove this.
-
->>>>>>> 6b9950d4a53b1d34813feb30a5a1314ab5086aeb
 class Artist(Model):
     name = CharField(unique=True) #fields in artist table
     #how/where to add NOCASE

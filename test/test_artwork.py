@@ -33,22 +33,22 @@ class TestArtwork(TestCase):
 
 
     def test_add_artist(self):
-        artist = Artist(name = 'Nicole Tempas', email = 'nt@gmail.com')
+        artist = Artist(name = 'Quinn Tempas', email = 'qt@gmail.com')
         artist.save()
         self.assertEqual(1, database.artist_count())
     
     def test_add_artist_not_unique(self):
-        self.add_test_data()
-        artist3 = Artist(name = 'Paul Cezanne', email = 'pc@gmail.com') #should violate unique constraint for name and email
-        artist4 = Artist(name = 'Saul Cezanne', email = 'pc@gmail.com') #should violate unique constraint for name and email
-        artist5 = Artist(name = 'Paul Cezanne', email = 'cp@gmail.com') #should violate unique constraint for name and email
+        self.add_test_data() #should violate unique constraint for name and/or email
+        artist3 = Artist(name = 'Paul Cezanne', email = 'pc@gmail.com') #both name and email not unique
+        artist4 = Artist(name = 'Saul Cezanne', email = 'pc@gmail.com') #email not unique
+        artist5 = Artist(name = 'Paul Cezanne', email = 'cp@gmail.com') #name not unique
         
         with self.assertRaises(IntegrityError): #should raise an error because name & email not unique
             artist3.save()
             artist4.save()
             artist5.save()
 
-            #also test name w/ different email; correct email different name
+           
 
    # def test_add_artwork(self):
     #    artwork = Artwork(name='Still Life', price = 500)

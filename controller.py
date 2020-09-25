@@ -35,9 +35,9 @@ def display_available_work_by_an_artist():
     artist = get_artist_by_name(name)
     print(artist)
     try:
-        artworks = database.display_avail_by_artist(artist)
-        if artworks:
-            for row in artworks:
+        available_artwork = database.display_avail_by_artist(artist)
+        if available_artwork:
+            for row in available_artwork:
                 print(row)
         else:
             raise ArtError('There are no available pieces of art by this artist on file')
@@ -49,11 +49,15 @@ def show_all_artwork_by_one_artist():
     name = ui.get_string('Enter name of artist whose work you would like to see ')
     name = name.title()
     artist = get_artist_by_name(name) #retrieve artist object 
-    print(artist)
+    #print(artist)
+    #print(artist.id)
+
     try:
-        artworks = database.show_artwork_by_one_artist(artist)
-        if artworks:
-            for row in artworks:
+        artwork_by_artist = database.show_artwork_by_one_artist(artist) 
+       
+        print(artwork_by_artist)
+        if artwork_by_artist: #if any artwork by that artist is found
+            for row in artwork_by_artist:
                 print(row)
         else:
             raise ArtError('There are no pieces of art by this artist on file')
@@ -90,7 +94,7 @@ def get_artwork_by_name(name):
 
 def get_artist_by_name(name):
     return Artist.get_or_none(Artist.name == name)
-
+   
 def quit_program():
     ui.message('Thanks and bye!')
     
