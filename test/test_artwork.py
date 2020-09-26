@@ -1,10 +1,8 @@
 from unittest import TestCase
 import database_config
 
-
 #change database path to test_art.sqlite
 database_config.database_path = 'test_art.sqlite'
-
 import database
 
 import controller
@@ -13,7 +11,7 @@ from database import ArtError, IntegrityError
 
 class TestArtwork(TestCase):
     
-    def setUp(self): #supposed to run before every test - but doesn't seem to do it
+    def setUp(self): # runs before every test 
         # connect to dbase and delete from dbase all data in each table
         Artist.delete().execute() #deletes everything in the table
         Artwork.delete().execute()
@@ -43,7 +41,6 @@ class TestArtwork(TestCase):
         artist3 = Artist(name = 'Paul Cezanne', email = 'pc@gmail.com') #both name and email not unique
         artist4 = Artist(name = 'Saul Cezanne', email = 'pc@gmail.com') #email not unique
         artist5 = Artist(name = 'Paul Cezanne', email = 'cp@gmail.com') #name not unique
-        
         with self.assertRaises(IntegrityError): #should raise an error because name & email not unique
             artist3.save()
             artist4.save()
@@ -58,11 +55,13 @@ class TestArtwork(TestCase):
         artwork.save()
         self.assertEqual(3, database.artwork_count_all())
 
+
     def test_add_artwork_not_unique(self):
         self.add_test_data()
         artwork = Artwork(artist = 'Paul Cezanne', name='The Bathers', price = 600)
         with self.assertRaises(IntegrityError): #will not add artwork because it violates unique constraint
             artwork.save()
+
 
     def test_create_artwork_default_available_yes(self):
         artwork = Artwork(artist = 'Paul Cezanne', name='The Blue Vase', price = 600)
@@ -82,11 +81,12 @@ class TestArtwork(TestCase):
         with self.assertRaises(ArtError):
             database.delete_artwork(artwork) 
         
-    #def test_change_artwork_status(self):
-     #   self.add_test_data()
-      #  database.change_availability(self.artwork1)
-        #self.assertFalse(self.artwork1.is_available)
-       # self.assertFalse(self.artwork1.is_available)
+    def test_change_artwork_status(self):
+        self.add_test_data()
+        self.artwork1.is_available= False
+        #database.change_availability(self.artwork1.is_available == False)
+        self.assertFalse(self.artwork1.is_available)
+       
 
     
     def test_artwork_count_all(self):
