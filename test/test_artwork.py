@@ -69,6 +69,12 @@ class TestArtwork(TestCase):
         database.delete_artwork(self.artwork2) #should be 1 after delete
         self.assertEqual(count-1, database.artwork_count_all()) #count the number of artwork pieces in the artwork table
        
+    def test_delete_artwork_not_in_table_raises_error(self):
+        self.add_test_data() #call helper method above to add data - 2 in artwork table
+        artwork = Artwork(artist = 'Not known', name = 'Not known', price = 0)
+        with self.assertRaises(ArtError):
+            database.delete_artwork(artwork) 
+        
 
     #def test_add_artwork_already_in_table(self): #artwork name is unique
      #   self.add_test_data() #adds 2 artworks
@@ -81,8 +87,7 @@ class TestArtwork(TestCase):
 
     
     
-    #def test_delete_artwork_not_in_table(self):
-     #   pass
+    
     
 
     #if __name__ == '__main__':
