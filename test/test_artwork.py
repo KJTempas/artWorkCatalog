@@ -94,7 +94,10 @@ class TestArtwork(TestCase):
         count = database.artwork_count_all()
         self.assertEqual(2, count)
 
-    
+    def test_artist_count(self):
+        self.add_test_data()
+        count = database.artist_count()
+        self.assertEqual(2, count)
     
     
     
