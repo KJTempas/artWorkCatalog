@@ -62,7 +62,14 @@ class TestArtwork(TestCase):
         artwork = Artwork(artist = 'Paul Cezanne', name='The Blue Vase', price = 600)
         artwork.save()
         self.assertTrue(artwork.is_available)
-        
+
+    def test_delete_artwork(self):
+        self.add_test_data() #call helper method above to add data - 2 in artwork table
+        count = database.artwork_count_all() #original count is 2
+        database.delete_artwork(self.artwork2) #should be 1 after delete
+        self.assertEqual(count-1, database.artwork_count_all()) #count the number of artwork pieces in the artwork table
+       
+
     #def test_add_artwork_already_in_table(self): #artwork name is unique
      #   self.add_test_data() #adds 2 artworks
       #  artwork = Artwork(artist = "Auguste Rodin", name = 'The Thinker', price = 500)
@@ -73,12 +80,7 @@ class TestArtwork(TestCase):
     
 
     
-    #def test_delete_artwork(self):
-     #   self.add_test_data() #call helper method above to add data - 2 in artwork table
-      #  Artwork.delete(artwork1)  #now only 1 piece of art is in the artwork table
-       # self.assertEqual(1, Artwork.select().count_all()) #count the number of artwork pieces in the artwork table
-       # self.assertIsNone(artwork1)  #there is no artwork1 in the artwork table
-
+    
     #def test_delete_artwork_not_in_table(self):
      #   pass
     
