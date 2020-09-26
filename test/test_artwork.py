@@ -88,14 +88,11 @@ class TestArtwork(TestCase):
         #self.assertFalse(self.artwork1.is_available)
        # self.assertFalse(self.artwork1.is_available)
 
-    #def test_add_artwork_already_in_table(self): #artwork name is unique
-     #   self.add_test_data() #adds 2 artworks
-      #  artwork = Artwork(artist = "Auguste Rodin", name = 'The Thinker', price = 500)
-       # artwork.save() #try to save - should not be able to add as name is same as already in table
-        #self.assertEqual(2, database.artwork_count_all()) #should have only 2 artworks
-       
-
     
+    def test_artwork_count_all(self):
+        self.add_test_data()
+        count = database.artwork_count_all()
+        self.assertEqual(2, count)
 
     
     
