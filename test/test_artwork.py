@@ -54,23 +54,23 @@ class TestArtwork(TestCase):
         #Artist.delete().execute()
         #Artwork.delete().execute()
         self.add_test_data() #to make sure artist is in the artist table
-        artwork = Artwork(artist = "Paul Cezanne", name='The Blue Vase', price = 600)
+        artwork = Artwork(artist = 'Paul Cezanne', name='The Blue Vase', price = 600)
         artwork.save()
         self.assertEqual(3, database.artwork_count_all())
 
-
-
+    def test_create_artwork_default_available_yes(self):
+        artwork = Artwork(artist = 'Paul Cezanne', name='The Blue Vase', price = 600)
+        artwork.save()
+        self.assertTrue(artwork.is_available)
+        
     #def test_add_artwork_already_in_table(self): #artwork name is unique
-     #   self.add_test_data() #adds 2 artworks; this includes the artwork listed below
-      #  artwork3 = Artwork(name = 'The Thinker', price = 500, artist = self.artist1)
-        #artwork3.save() #try to save - should not be able to add as name is same as already in table
+     #   self.add_test_data() #adds 2 artworks
+      #  artwork = Artwork(artist = "Auguste Rodin", name = 'The Thinker', price = 500)
+       # artwork.save() #try to save - should not be able to add as name is same as already in table
         #self.assertEqual(2, database.artwork_count_all()) #should have only 2 artworks
-       # with self.assertRaises(IntegrityError):
-        #    artwork3.save()
+       
 
-    #def test_create_artwork_default_available_yes(self):
-     #       self.add_test_data()
-      #      self.assertTrue(artwork1.is_available())
+    
 
     
     #def test_delete_artwork(self):
