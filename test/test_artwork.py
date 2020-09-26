@@ -58,10 +58,17 @@ class TestArtwork(TestCase):
         artwork.save()
         self.assertEqual(3, database.artwork_count_all())
 
+    def test_add_artwork_not_unique(self):
+        self.add_test_data()
+        artwork = Artwork(artist = 'Paul Cezanne', name='The Bathers', price = 600)
+        with self.assertRaises(IntegrityError): #will not add artwork because it violates unique constraint
+            artwork.save()
+
     def test_create_artwork_default_available_yes(self):
         artwork = Artwork(artist = 'Paul Cezanne', name='The Blue Vase', price = 600)
         artwork.save()
         self.assertTrue(artwork.is_available)
+    
 
     def test_delete_artwork(self):
         self.add_test_data() #call helper method above to add data - 2 in artwork table
@@ -75,6 +82,11 @@ class TestArtwork(TestCase):
         with self.assertRaises(ArtError):
             database.delete_artwork(artwork) 
         
+    #def test_change_artwork_status(self):
+     #   self.add_test_data()
+      #  database.change_availability(self.artwork1)
+        #self.assertFalse(self.artwork1.is_available)
+       # self.assertFalse(self.artwork1.is_available)
 
     #def test_add_artwork_already_in_table(self): #artwork name is unique
      #   self.add_test_data() #adds 2 artworks
