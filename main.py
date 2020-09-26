@@ -18,6 +18,8 @@ def main():
         elif choice == '6':
             controller.delete_artwork()
         elif choice == '7':
+            controller.show_all_artists()
+        elif choice == '8':
             break
 
 

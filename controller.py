@@ -8,6 +8,7 @@ def add_artist():
     name = ui.get_string('Enter name of artist - First Last')
     name = name.title()
     email = ui.get_string(f'Enter email  for {name}')
+    #email = ui.get_email(f'Enter email  for {name}')
     try:
         database.add_artist(name, email)
         print('Added artist')
@@ -88,7 +89,11 @@ def delete_artwork():
     except ArtError as e:
         print(e)
     
-    
+def show_all_artists():
+    artists = database.show_all_artists()
+    for artist in artists:
+        print(artist)
+
 def get_artwork_by_name(name):
     return Artwork.get_or_none(Artwork.name == name)
 

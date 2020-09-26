@@ -21,9 +21,7 @@ def show_artwork_by_one_artist(artist):
 
     try:
         artwork_by_artist = Artwork.select().where(Artwork.artist == artist.id) 
-        
         return artwork_by_artist
-        
     except ArtError as e:
         print(e)
 
@@ -45,6 +43,13 @@ def delete_artwork(artwork):
     rows_deleted = Artwork.delete().where (Artwork.name == artwork.name).execute()
     if not rows_deleted:
         raise ArtError('Tried to delete artwork that does not exist')
+
+def show_all_artists():
+    try:
+        artists = Artist.select()
+        return artists
+    except ArtError as e:
+        print(e)
 
 def artist_count():
     #return number of artist in dbase

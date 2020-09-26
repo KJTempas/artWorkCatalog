@@ -1,3 +1,5 @@
+import re
+
 def menu_choice():
     while True:
         print("""
@@ -7,10 +9,11 @@ def menu_choice():
 4 to show all Artwork by one Artist
 5 to display all Available Artwork by one Artist
 6 to delete Artwork
-7 to quit
+7 to show all Artists
+8 to quit
        """)
         response = get_string('Enter choice? ')
-        if response in ['1','2','3','4','5','6','7']:
+        if response in ['1','2','3','4','5','6','7', '8']:
             return response
         print('Invalid choice.  Please select one of the options.')
 
@@ -34,7 +37,13 @@ def get_positive_float(question):
         except ValueError:
             print('Please enter a number')
 
-
+def get_email(question):
+    while True:
+        response = input(f'{question}:')
+        regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'  #https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/
+        if (re.search(regex,response)):#if the response conforms to the regex pattern for email
+            return response
+        print('Please enter a valid email address')
 
 
 def message(msg):
