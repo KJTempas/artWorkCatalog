@@ -1,5 +1,4 @@
 from unittest import TestCase
-import os
 import database_config
 
 
@@ -14,10 +13,10 @@ from database import ArtError, IntegrityError
 
 class TestArtwork(TestCase):
     
-    def setUp(self):
+    def setUp(self): #supposed to run before every test - but doesn't seem to do it
         # connect to dbase and delete from dbase all data in each table
-        Artist.delete() #deletes everything in the table
-        Artwork.delete()
+        Artist.delete().execute() #deletes everything in the table
+        Artwork.delete().execute()
         
 
     def add_test_data(self): #helper/utility method
@@ -33,11 +32,13 @@ class TestArtwork(TestCase):
 
 
     def test_add_artist(self):
+        #Artist.delete().execute() #start w empty artist table
         artist = Artist(name = 'Quinn Tempas', email = 'qt@gmail.com')
         artist.save()
         self.assertEqual(1, database.artist_count())
     
     def test_add_artist_not_unique(self):
+        #Artist.delete().execute()
         self.add_test_data() #should violate unique constraint for name and/or email
         artist3 = Artist(name = 'Paul Cezanne', email = 'pc@gmail.com') #both name and email not unique
         artist4 = Artist(name = 'Saul Cezanne', email = 'pc@gmail.com') #email not unique
@@ -49,11 +50,13 @@ class TestArtwork(TestCase):
             artist5.save()
 
            
-
-   # def test_add_artwork(self):
-    #    artwork = Artwork(name='Still Life', price = 500)
-     #   artwork.save()
-      #  self.assertEqual(1, database.artwork_count_all())# ???
+    def test_add_artwork(self):
+        #Artist.delete().execute()
+        #Artwork.delete().execute()
+        self.add_test_data() #to make sure artist is in the artist table
+        artwork = Artwork(artist = "Paul Cezanne", name='The Blue Vase', price = 600)
+        artwork.save()
+        self.assertEqual(3, database.artwork_count_all())
 
 
 
@@ -70,14 +73,17 @@ class TestArtwork(TestCase):
       #      self.assertTrue(artwork1.is_available())
 
     
-   # def test_delete_artwork(self):
-    #    self.add_test_data() #call helper method above to add data - 2 in artwork table
-     #   artwork.delete(artwork1)  #now only 1 piece of art is in the artwork table
-      #  self.assertEqual(1, Artwork.select().count_all()) #count the number of artwork pieces in the artwork table
+    #def test_delete_artwork(self):
+     #   self.add_test_data() #call helper method above to add data - 2 in artwork table
+      #  Artwork.delete(artwork1)  #now only 1 piece of art is in the artwork table
+       # self.assertEqual(1, Artwork.select().count_all()) #count the number of artwork pieces in the artwork table
        # self.assertIsNone(artwork1)  #there is no artwork1 in the artwork table
 
     #def test_delete_artwork_not_in_table(self):
      #   pass
     
+
+    #if __name__ == '__main__':
+    #unittest.main()
        
         
