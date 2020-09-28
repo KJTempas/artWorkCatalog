@@ -14,7 +14,7 @@ def menu_choice():
 9 to quit
        """)
         response = get_string('Enter choice? ')
-        if response in ['1','2','3','4','5','6','7', '8','9'bre]:
+        if response in ['1','2','3','4','5','6','7', '8','9']:
             return response
         print('Invalid choice.  Please select one of the options.')
 
