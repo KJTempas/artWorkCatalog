@@ -20,6 +20,8 @@ def main():
         elif choice == '7':
             controller.show_all_artists()
         elif choice == '8':
+            controller.search_for_artwork_by_name()
+        elif choice == '9':
             break
 
 

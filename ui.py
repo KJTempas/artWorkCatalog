@@ -10,10 +10,11 @@ def menu_choice():
 5 to display all Available Artwork by one Artist
 6 to delete Artwork
 7 to show all Artists
-8 to quit
+8 to search for Artwork by name
+9 to quit
        """)
         response = get_string('Enter choice? ')
-        if response in ['1','2','3','4','5','6','7', '8']:
+        if response in ['1','2','3','4','5','6','7', '8','9'bre]:
             return response
         print('Invalid choice.  Please select one of the options.')
 

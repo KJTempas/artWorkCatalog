@@ -94,6 +94,12 @@ def show_all_artists():
     for artist in artists:
         print(artist)
 
+def search_for_artwork_by_name():
+    word = ui.get_string('Enter word to search')
+    artwork = database.artwork_search(word)
+    print(artwork)
+
+
 def get_artwork_by_name(name):
     return Artwork.get_or_none(Artwork.name == name)
 

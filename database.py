@@ -21,7 +21,7 @@ def show_artwork_by_one_artist(artist):
 
     try:
         artwork_by_artist = Artwork.select().where(Artwork.artist == artist.id) 
-        return artwork_by_artist
+        return list(artwork_by_artist)
     except ArtError as e:
         print(e)
 
@@ -35,7 +35,7 @@ def display_avail_by_artist(artist):
     try:
         available_artwork = Artwork.select().where(Artwork.artist == artist.id) and (Artwork.is_available == True) #same error as above
         
-        return available_artwork
+        return list(available_artwork)
     except ArtError as e:
         print(e)
 
@@ -47,7 +47,7 @@ def delete_artwork(artwork):
 def show_all_artists():
     try:
         artists = Artist.select()
-        return artists
+        return list(artists)
     except ArtError as e:
         print(e)
 
@@ -57,8 +57,15 @@ def artist_count():
     #return Artist.select().count()
     return num_of_artists
 
+def artwork_search(word):
+    artwork = Artwork.select().where((fn.LOWER(Artwork.name).contains(word.lower())))
+    return list(artwork)
+
 def artwork_count_all():
     return Artwork.select().count()
+
+def get_artwork_by_id(artwork_id):
+    return Artwork.get_or_none(Artwork.id == artwork_id)
 
 class ArtError(Exception):
     pass

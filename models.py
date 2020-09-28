@@ -30,7 +30,7 @@ class Artwork(Model):
        # constraints = [SQL('UNIQUE ( name COLLATE NOCASE, artist COLLATE NOCASE)')]
     
     def __str__(self):
-        return f'{self.name} is available -{self.is_available} for ${self.price}'
+        return f'{self.name} by {self.artist.name} is available -{self.is_available} for ${self.price}'
 
 #connect to DB and create tables that map to models Artist and Artwork
 db.connect()
