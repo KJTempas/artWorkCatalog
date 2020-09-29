@@ -87,6 +87,10 @@ class TestArtwork(TestCase):
         #database.change_availability(self.artwork1.is_available == False)
         self.assertFalse(self.artwork1.is_available)
        
+    def test_show_all_artists(self):
+        self.add_test_data()
+        count = database.artist_count()
+        self.assertEqual(2, count)
 
     
     def test_artwork_count_all(self):
