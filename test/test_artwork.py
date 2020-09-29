@@ -106,6 +106,12 @@ class TestArtwork(TestCase):
         count = database.artist_count()
         self.assertEqual(2, count)
     
+
+    def test_get_artist_by_name(self):
+        self.add_test_data()
+        self.assertEqual('pc@gmail.com', database.find_artist('Paul Cezanne').email)
+
+    
     
     
 

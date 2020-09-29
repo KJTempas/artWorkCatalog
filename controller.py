@@ -106,9 +106,8 @@ def get_artwork_by_name(name):
     return Artwork.get_or_none(Artwork.name == name)
 
 def get_artist_by_name():
-    name = ui.get_string('Enbter name of artist')
+    name = ui.get_string('Enter name of artist')
     artist = database.find_artist(name)
-    #return Artist.get_or_none(Artist.name == name)
     print(artist)
    
 def quit_program():
