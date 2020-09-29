@@ -22,7 +22,7 @@ def add_artwork():
     price = ui.get_positive_float('Enter the price for this piece of art ')
     artist = ui.get_string('Enter name of artist -First Last ')
     artist = artist.title()
-
+    
     try:
         database.add_artwork(name, price, artist)
         print('Added artwork')
@@ -66,8 +66,6 @@ def show_all_artwork_by_one_artist():
         print(e)
 
 
-    
-
 def change_availability():
     name = ui.get_string('Enter name of artwork to change availability: ')
     name = name.title()
@@ -95,16 +93,23 @@ def show_all_artists():
         print(artist)
 
 def search_for_artwork_by_name():
-    word = ui.get_string('Enter word to search')
-    artwork = database.artwork_search(word)
+    name = ui.get_string('Enter name of artwork')
+    #artwork = database.artwork_search(name)
+    artwork = database.artwork_search(name)
+    #artwork = Artwork.get_or_none(Artwork.name==name)
     print(artwork)
+    #artwork = database.artwork_search(word)
+    #print(artwork)
 
 
 def get_artwork_by_name(name):
     return Artwork.get_or_none(Artwork.name == name)
 
-def get_artist_by_name(name):
-    return Artist.get_or_none(Artist.name == name)
+def get_artist_by_name():
+    name = ui.get_string('Enbter name of artist')
+    artist = database.find_artist(name)
+    #return Artist.get_or_none(Artist.name == name)
+    print(artist)
    
 def quit_program():
     ui.message('Thanks and bye!')

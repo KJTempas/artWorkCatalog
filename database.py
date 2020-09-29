@@ -57,10 +57,19 @@ def artist_count():
     #return Artist.select().count()
     return num_of_artists
 
-def artwork_search(word):
-    artwork = Artwork.select().where((fn.LOWER(Artwork.name).contains(word.lower())))
-    return list(artwork)
+def artwork_search(name):
+    #artwork = Artwork.select().where((fn.LOWER(Artwork.name).contains(word.lower())))
+    #return Artwork.get_or_none(Artwork.name == name)
+    artwork = Artwork.get_or_none(Artwork.name == name)
+    #return list(artwork)
 
+#below from readlinglist/bookstore
+#query = Book.select().where( ( fn.LOWER(Book.title).contains(term.lower() ) ) | (fn.LOWER(Book.author).contains(term.lower())))
+#   return list(query)
+def find_artist(name):
+    artist = Artist.get_or_none(Artist.name == name)
+    return artist
+    
 def artwork_count_all():
     return Artwork.select().count()
 
