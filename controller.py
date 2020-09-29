@@ -33,11 +33,12 @@ def add_artwork():
 def display_available_work_by_an_artist():
     name = ui.get_string('Enter name of artist ')
     name = name.title()
-    artist = get_artist_by_name(name)
+    artist = database.find_artist(name)
     print(artist)
     try:
         available_artwork = database.display_avail_by_artist(artist)
         if available_artwork:
+            print(available_artwork)
             for row in available_artwork:
                 print(row)
         else:
@@ -49,13 +50,13 @@ def display_available_work_by_an_artist():
 def show_all_artwork_by_one_artist():
     name = ui.get_string('Enter name of artist whose work you would like to see ')
     name = name.title()
-    artist = get_artist_by_name(name) #retrieve artist object 
-    #print(artist)
-    #print(artist.id)
+    artist = database.find_artist(name) #retrieve artist object 
+    print(artist)
+    print(artist.id)
 
     try:
-        artwork_by_artist = database.show_artwork_by_one_artist(artist) 
-       
+        #artwork_by_artist = database.show_artwork_by_one_artist(artist) #original
+        artwork_by_artist = database.show_artwork_by_one_artist(name)
         print(artwork_by_artist)
         if artwork_by_artist: #if any artwork by that artist is found
             for row in artwork_by_artist:
@@ -67,11 +68,11 @@ def show_all_artwork_by_one_artist():
 
 
 def change_availability():
-    name = ui.get_string('Enter name of artwork to change availability: ')
+    name = ui.get_string('Enter name of artwork to change  to Not available : ')
     name = name.title()
-    artwork = get_artwork_by_name(name)
+    #artwork = get_artwork_by_name(name)
     try:
-        database.change_availability(artwork) #send to database to delete that artwork
+        database.change_availability(name) #send to database to delete that artwork
         print('Changed availability')
     except ArtError as e:
         print(e)
@@ -80,9 +81,8 @@ def change_availability():
 def delete_artwork():
     name = ui.get_string('Enter name of artwork to delete')
     name = name.title()
-    artwork = get_artwork_by_name(name)
     try:
-        database.delete_artwork(artwork) #send to database to delete that artowrk
+        database.delete_artwork(name) #send to database to delete that artowrk
         print('Deleted artwork')
     except ArtError as e:
         print(e)
@@ -108,7 +108,10 @@ def get_artwork_by_name(name):
 def get_artist_by_name():
     name = ui.get_string('Enter name of artist')
     artist = database.find_artist(name)
-    print(artist)
+    if artist:
+        print(artist)
+    else:
+        raise ArtError('That artist is not in the database')
    
 def quit_program():
     ui.message('Thanks and bye!')
