@@ -22,49 +22,53 @@ def add_artwork():
     price = ui.get_positive_float('Enter the price for this piece of art ')
     artist = ui.get_string('Enter name of artist -First Last ')
     artist = artist.title()
-    
-    try:
-        database.add_artwork(name, price, artist)
-        print('Added artwork')
-    except ArtError as e:
-        print(e)
-
+    #check to make sure that artist is in the artist table
+    artist = database.find_artist(artist.name)
+    print(artist)
+    if artist: #if the artist is found
+        try:
+            database.add_artwork(name, price, artist)
+            print('Added artwork')
+        except ArtError as e:
+            print(e)
+    else:
+        raise ArtError('That artist is not on file. Add artist before adding artwork.')
 
 def display_available_work_by_an_artist():
     name = ui.get_string('Enter name of artist ')
     name = name.title()
     artist = database.find_artist(name)
     print(artist)
-    try:
-        available_artwork = database.display_avail_by_artist(artist)
-        if available_artwork:
-            print(available_artwork)
-            for row in available_artwork:
-                print(row)
-        else:
-            raise ArtError('There are no available pieces of art by this artist on file')
+    #try:
+    available_artwork = database.display_avail_by_artist(artist)
+    if available_artwork:
+        print(available_artwork)
+        for row in available_artwork:
+            print(row)
+    else:
+        raise ArtError('There are no available pieces of art by this artist on file')
 
-    except ArtError as e:
-        print(e)
+    #except ArtError as e:
+     #   print(e)
 
 def show_all_artwork_by_one_artist():
     name = ui.get_string('Enter name of artist whose work you would like to see ')
     name = name.title()
-    artist = database.find_artist(name) #retrieve artist object 
+    artist = database.find_artist(name) #retrieve artist object -DO I need to do this?
     print(artist)
     print(artist.id)
 
-    try:
+    #try:
         #artwork_by_artist = database.show_artwork_by_one_artist(artist) #original
-        artwork_by_artist = database.show_artwork_by_one_artist(name)
-        print(artwork_by_artist)
-        if artwork_by_artist: #if any artwork by that artist is found
-            for row in artwork_by_artist:
-                print(row)
-        else:
-            raise ArtError('There are no pieces of art by this artist on file')
-    except ArtError as e:
-        print(e)
+    artwork_by_artist = database.show_artwork_by_one_artist(artist)
+    print(artwork_by_artist)
+    if artwork_by_artist: #if any artwork by that artist is found
+        for row in artwork_by_artist:
+            print(row)
+    else:
+        raise ArtError('There are no pieces of art by this artist on file')
+    #except ArtError as e:
+     #   print(e)
 
 
 def change_availability():

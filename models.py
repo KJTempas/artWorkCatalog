@@ -19,10 +19,11 @@ class Artist(Model):
 
 
 class Artwork(Model):
-    artist = ForeignKeyField(Artist , backref='artworks') 
+    artist = ForeignKeyField(Artist, backref='artworks')  # add this? -field = Artist.name,
     #artwork id will be generated, since no primary key is specified
     name = CharField(unique=True)   
     price = DecimalField(9,2)
+    #price = DecimalField(constraints=[Check('price < 10000')])
     is_available = BooleanField(default=True)
 
     class Meta:

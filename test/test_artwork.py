@@ -48,8 +48,6 @@ class TestArtwork(TestCase):
 
            
     def test_add_artwork(self):
-        #Artist.delete().execute()
-        #Artwork.delete().execute()
         self.add_test_data() #to make sure artist is in the artist table
         artwork = Artwork(artist = 'Paul Cezanne', name='The Blue Vase', price = 600)
         artwork.save()
@@ -83,7 +81,7 @@ class TestArtwork(TestCase):
         
     def test_change_artwork_status(self):
         self.add_test_data()
-        self.artwork1.is_available= False
+        self.artwork1.is_available = False
         #database.change_availability(self.artwork1.is_available == False)
         self.assertFalse(self.artwork1.is_available)
        
