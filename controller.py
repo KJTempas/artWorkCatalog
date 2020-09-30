@@ -17,17 +17,17 @@ def add_artist():
         print(e)
 
 def add_artwork():
-    name = ui.get_string('Enter name of artwork ')
-    name = name.title()
+    name_of_artwork = ui.get_string('Enter name of artwork ')
+    name_of_artwork = name_of_artwork.title() #move this elsewhere
     price = ui.get_positive_float('Enter the price for this piece of art ')
-    artist = ui.get_string('Enter name of artist -First Last ')
-    artist = artist.title()
+    name_of_artist = ui.get_string('Enter name of artist -First Last ')
+    name_of_artist = name_of_artist.title()#put this somewhere else
     #check to make sure that artist is in the artist table
-    #artist = database.find_artist(artist.name)
-    #print(artist)
+    artist = database.find_artist(name_of_artist)
+    print(artist)
     #if artist: #if the artist is found
     try:
-        database.add_artwork(name, price, artist)
+        database.add_artwork(artist,name_of_artwork, price)
         print('Added artwork')
     except ArtError as e:
         print(e)

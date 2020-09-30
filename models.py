@@ -21,7 +21,7 @@ class Artist(Model):
 class Artwork(Model):
     artist = ForeignKeyField(Artist, backref='artworks')  # add this? -field = Artist.name,
     #artwork id will be generated, since no primary key is specified
-    name = CharField(unique=True)   
+    name_of_artwork = CharField(unique=True)   
     price = DecimalField(9,2)
     #price = DecimalField(constraints=[Check('price < 10000')])
     is_available = BooleanField(default=True)
@@ -31,7 +31,7 @@ class Artwork(Model):
        # constraints = [SQL('UNIQUE ( name COLLATE NOCASE, artist COLLATE NOCASE)')]
     
     def __str__(self):
-        return f'{self.name} by {self.artist.name} is available -{self.is_available} for ${self.price}'
+        return f'{self.name_of_artwork} by {self.artist.name} is available -{self.is_available} for ${self.price}'
 
 #connect to DB and create tables that map to models Artist and Artwork
 db.connect()
