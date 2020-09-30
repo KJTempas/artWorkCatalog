@@ -1,1 +1,1 @@
-database_path = 'art.sqlite'
+database_path = 'art2.sqlite'

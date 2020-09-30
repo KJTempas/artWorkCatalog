@@ -15,14 +15,14 @@ def add_artwork(name, price, artist):
     except IntegrityError as e:
         raise ArtError('Error adding artwork because ' + str(e))
 
-#def show_artwork_by_one_artist(artist):#original
+
 def show_artwork_by_one_artist(artist):
-    #print(artist) #works- prints object
-    #print(artist.id) #works - prints id of that artist
+    print(artist) #works- prints object
+    print(artist.id) #works - prints id of that artist
 
     #try: #don't need try/except because not modifying dbase
         #artwork_by_artist = Artwork.select().where(Artwork.artist == artist.id) 
-    artwork_by_artist = Artwork.select().where(Artwork.artist.name == artist.name) 
+    artwork_by_artist = Artwork.select().where(Artwork.artist == artist.name) 
     return list(artwork_by_artist)
    # except ArtError as e:
        # print(e)
@@ -69,7 +69,7 @@ def artwork_search(name):
 #below from readlinglist/bookstore
 #query = Book.select().where( ( fn.LOWER(Book.title).contains(term.lower() ) ) | (fn.LOWER(Book.author).contains(term.lower())))
 #   return list(query)
-def find_artist(artist.name):
+def find_artist(name):
     artist = Artist.get_or_none(Artist.name == name)
     #artist = Artist.select().where(Artist.name==name)
     return artist
