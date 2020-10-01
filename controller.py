@@ -18,8 +18,8 @@ def add_artwork():
     name_of_artwork = ui.get_string('Enter name of artwork ') 
     price = ui.get_positive_float('Enter the price for this piece of art ')
     name_of_artist = ui.get_string('Enter name of artist -First Last ')
-    name_of_artist = name_of_artist.title()
-    artist = database.find_artist(name_of_artist) #get artist object
+
+    artist = database.find_artist(name_of_artist) #get artist object from name provided
     if artist: #if the artist is found/exists
         try:
             database.add_artwork(artist,name_of_artwork, price)
@@ -31,11 +31,9 @@ def add_artwork():
 
 def display_available_work_by_one_artist():
     name_of_artist = ui.get_string('Enter name of artist ')
-    artist = database.find_artist(name_of_artist)
-    print(artist)
-    available_artwork = database.display_avail_by_artist(artist)
+    artist = database.find_artist(name_of_artist) #retrieve the artist object
+    available_artwork = database.display_avail_by_artist(artist) #send that artist to database to retrieve their work
     if available_artwork:
-        print(available_artwork)
         for row in available_artwork:
             print(row)
     else:
@@ -57,22 +55,17 @@ def show_all_artwork_by_one_artist():
 
 def change_availability():
     name_of_artwork = ui.get_string('Enter name of artwork to change to Not available/Sold  ')
-    name_of_artwork = name_of_artwork.title()
     artwork = get_artwork_by_name(name_of_artwork)#get the artwork object
-    #see if artwork is already sold
-    if database.check_availability(artwork):
-        try:
-            database.change_availability(artwork) 
-            print('Changed availability')
-        except ArtError as e:
-            print(e)
-    else:
-        print('That artwork is already sold')
+    print(artwork) # I can see True go to False here after changing an artwork
+    #print(artwork.is_available) #should print True or False - but is not
+    database.change_availability(artwork) #send to db to change availability to False
+    #print('Changed availability')
+    #else:
+     #   print('That artwork is already sold')
     
 
 def delete_artwork():
     name_of_artwork = ui.get_string('Enter name of artwork to delete')
-    name_of_artwork = name_of_artwork.title()
     try:
         database.delete_artwork(name_of_artwork) #send to database to delete that artowrk
         print('Deleted artwork')
@@ -90,8 +83,10 @@ def show_all_artwork():
     for artwork in artworks:
         print(artwork)
 
+
 def get_artwork_by_name(name_of_artwork):
     return Artwork.get_or_none(Artwork.name_of_artwork == name_of_artwork)
+
 
 def get_artist_by_name():
     name = ui.get_string('Enter name of artist')

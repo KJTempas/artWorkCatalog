@@ -23,18 +23,23 @@ class TestArtwork(TestCase):
         self.artist1.save()
         self.artist2.save()
         
-        self.artwork1 = Artwork(name = 'The Thinker', price = 500, artist = self.artist1)
+        self.artwork1 = Artwork(name_of_artwork = 'The Thinker', price = 500, artist = self.artist1)
         self.artwork1.save()
-        self.artwork2 = Artwork(name = 'The Bathers', price =600, artist = self.artist2)
+        self.artwork2 = Artwork(name_of_artwork = 'The Bathers', price =600, artist = self.artist2)
         self.artwork2.save()
 
 
     def test_add_artist(self):
-        #Artist.delete().execute() #start w empty artist table
         artist = Artist(name = 'Quinn Tempas', email = 'qt@gmail.com')
         artist.save()
         self.assertEqual(1, database.artist_count())
     
+   # def test_add_artist_using_database_file_method(self):
+    #    name = 'Quinn Tempas'
+     #   email = 'qt@gmail.com'
+      #  database. add_artist(name,email)
+       # self.assertEqual(1, database.artist_count)
+
     def test_add_artist_not_unique(self):
         #Artist.delete().execute()
         self.add_test_data() #should violate unique constraint for name and/or email
@@ -49,20 +54,20 @@ class TestArtwork(TestCase):
            
     def test_add_artwork(self):
         self.add_test_data() #to make sure artist is in the artist table
-        artwork = Artwork(artist = 'Paul Cezanne', name='The Blue Vase', price = 600)
+        artwork = Artwork(artist = 'Paul Cezanne', name_of_artwork='The Blue Vase', price = 600)
         artwork.save()
         self.assertEqual(3, database.artwork_count_all())
 
 
     def test_add_artwork_not_unique(self):
         self.add_test_data()
-        artwork = Artwork(artist = 'Paul Cezanne', name='The Bathers', price = 600)
+        artwork = Artwork(artist = 'Paul Cezanne', name_of_artwork='The Bathers', price = 600)
         with self.assertRaises(IntegrityError): #will not add artwork because it violates unique constraint
             artwork.save()
 
 
     def test_create_artwork_default_available_yes(self):
-        artwork = Artwork(artist = 'Paul Cezanne', name='The Blue Vase', price = 600)
+        artwork = Artwork(artist = 'Paul Cezanne', name_of_artwork='The Blue Vase', price = 600)
         artwork.save()
         self.assertTrue(artwork.is_available)
     
