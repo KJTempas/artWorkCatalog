@@ -19,7 +19,7 @@ class Artist(Model):
 
 
 class Artwork(Model):
-    artist = ForeignKeyField(Artist, backref='artworks')  # add this? -field = Artist.name,
+    artist = ForeignKeyField(Artist, backref='artworks')  
     #artwork id will be generated, since no primary key is specified
     name_of_artwork = CharField(unique=True)   
     price = DecimalField(9,2)

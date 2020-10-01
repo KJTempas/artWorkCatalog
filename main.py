@@ -14,15 +14,15 @@ def main():
         elif choice == '4':
             controller.show_all_artwork_by_one_artist()
         elif choice == '5':
-            controller.display_available_work_by_an_artist()
+            controller.display_available_work_by_one_artist()
         elif choice == '6':
             controller.delete_artwork()
         elif choice == '7':
             controller.show_all_artists()
         elif choice == '8':
-            controller.search_for_artwork_by_name()
-        elif choice == '9':
             controller.get_artist_by_name()
+        elif choice == '9':
+            controller.show_all_artwork()
         elif choice == '10':
             break
 

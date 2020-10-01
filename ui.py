@@ -10,15 +10,14 @@ def menu_choice():
 5 to display all Available Artwork by one Artist
 6 to delete Artwork
 7 to show all Artists
-8 to search for Artwork by name
-9 to get Artist by name
+8 to get Artist by name
+9 to show all Artwork
 10 to quit
        """)
         response = get_string('Enter choice? ')
-        if response in ['1','2','3','4','5','6','7', '8','9','10']:
+        if response in ['1','2','3','4','5','6','7', '8','9']:
             return response
         print('Invalid choice.  Please select one of the options.')
-
 
 
 def get_string(question, max_length=None):
@@ -38,14 +37,6 @@ def get_positive_float(question):
                 print('Please enter a positive number')
         except ValueError:
             print('Please enter a number')
-
-def get_email(question):
-    while True:
-        response = input(f'{question}:')
-        regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'  #https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/
-        if (re.search(regex,response)):#if the response conforms to the regex pattern for email
-            return response
-        print('Please enter a valid email address')
 
 
 def message(msg):

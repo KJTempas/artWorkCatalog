@@ -17,36 +17,48 @@ def add_artwork(artist, name_of_artwork, price):
 
 
 def show_artwork_by_one_artist(artist):
-    
-    #try: #don't need try/except because not modifying dbase
+    try: #don't need try/except because not modifying dbase
         #artwork_by_artist = Artwork.select().where(Artwork.artist == artist.id) 
-    artwork_by_artist = Artwork.select().where(Artwork.artist == artist) 
-    return list(artwork_by_artist)
-   # except ArtError as e:
-       # print(e)
+        artwork_by_artist = Artwork.select().where(Artwork.artist == artist) 
+        return list(artwork_by_artist)
+    except ArtError as e:
+        print(e)
 
 
-def change_availability(name):
-    rows_updated = Artwork.update(is_available = False).where(Artwork.name == name).execute()
+def change_availability(artwork):
+    rows_updated = Artwork.update(is_available = False).where(Artwork.name_of_artwork == artwork.name_of_artwork).execute()
     if not rows_updated:
         raise ArtError('Artwork is already sold')
 
-def display_avail_by_artist(artist):
-    #try: #not needed since not modifying dbase
-    available_artwork = Artwork.select().where(Artwork.artist == artist.id) and (Artwork.is_available == True) #same error as above    
-    return list(available_artwork)
-    #except ArtError as e:
-     #   print(e)
 
-def delete_artwork(name):
-    rows_deleted = Artwork.delete().where (Artwork.name == name).execute()
-    if not rows_deleted:
-        raise ArtError('Tried to delete artwork that does not exist')
+def display_avail_by_artist(artist):
+    try:
+        available_artwork = Artwork.select().where(Artwork.artist == artist) and (Artwork.is_available == True)    
+        return list(available_artwork)
+    except ArtError as e:
+        print(e)
+
+
+def delete_artwork(name_of_artwork):
+    try:
+        rows_deleted = Artwork.delete().where(Artwork.name_of_artwork == name_of_artwork).execute()
+        if not rows_deleted:
+            raise ArtError('Tried to delete artwork that does not exist')
+    except ArtError as e:
+        print(e)        
+
 
 def show_all_artists():
     try:
         artists = Artist.select()
         return list(artists)
+    except ArtError as e:
+        print(e)
+
+def show_all_artwork():
+    try:
+        artworks = Artwork.select()
+        return list(artworks)
     except ArtError as e:
         print(e)
 
@@ -56,14 +68,20 @@ def artist_count():
     #return Artist.select().count()
     return num_of_artists
 
-def artwork_search(name):
+def artwork_search(name_of_artwork):
     #artwork = Artwork.select().where((fn.LOWER(Artwork.name).contains(word.lower())))
-    #return Artwork.get_or_none(Artwork.name == name)
-    #artwork = Artwork.get_or_none(Artwork.name == name)
-    artwork = Artwork.select().where(Artwork.name == name)
-    return artwork
-    
+    #artwork = Artwork.get_or_none(Artwork.name_of_artwork == name_of_artwork)
+    artwork = Artwork.get_or_none(Artwork.name_of_artwork == name_of_artwork)
+    #artwork = Artwork.select().where(Artwork.name_of_artwork == name_of_artwork)
+    #print(artwork)
+    return artwork 
 
+def artwork_check_avail_status(name_of_artwork):
+    return Artwork.get(Artwork.name_of_artwork == name_of_artwork).is_available
+
+def check_availability(name_of_artwork):
+    return Artwork.select(Artwork.is_available).where(Artwork.name_of_artwork == name_of_artwork) 
+    #return availability
 #below from readlinglist/bookstore
 #query = Book.select().where( ( fn.LOWER(Book.title).contains(term.lower() ) ) | (fn.LOWER(Book.author).contains(term.lower())))
 #   return list(query)

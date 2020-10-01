@@ -8,38 +8,31 @@ def add_artist():
     name = ui.get_string('Enter name of artist - First Last')
     name = name.title()
     email = ui.get_string(f'Enter email  for {name}')
-    #email = ui.get_email(f'Enter email  for {name}')
     try:
         database.add_artist(name, email)
         print('Added artist')
     except ArtError as e:
-        #art_ui.message('Error: Artist Already on File')
         print(e)
 
 def add_artwork():
-    name_of_artwork = ui.get_string('Enter name of artwork ')
-    name_of_artwork = name_of_artwork.title() #move this elsewhere
+    name_of_artwork = ui.get_string('Enter name of artwork ') 
     price = ui.get_positive_float('Enter the price for this piece of art ')
     name_of_artist = ui.get_string('Enter name of artist -First Last ')
-    name_of_artist = name_of_artist.title()#put this somewhere else
-    #check to make sure that artist is in the artist table
+    name_of_artist = name_of_artist.title()
+    artist = database.find_artist(name_of_artist) #get artist object
+    if artist: #if the artist is found/exists
+        try:
+            database.add_artwork(artist,name_of_artwork, price)
+            print('Added artwork')
+        except ArtError as e:
+            print(e)
+    else:
+        print('That artist is not on file. Add artist before adding artwork.')
+
+def display_available_work_by_one_artist():
+    name_of_artist = ui.get_string('Enter name of artist ')
     artist = database.find_artist(name_of_artist)
     print(artist)
-    #if artist: #if the artist is found
-    try:
-        database.add_artwork(artist,name_of_artwork, price)
-        print('Added artwork')
-    except ArtError as e:
-        print(e)
-    #else:
-    #raise ArtError('That artist is not on file. Add artist before adding artwork.')
-
-def display_available_work_by_an_artist():
-    name = ui.get_string('Enter name of artist ')
-    name = name.title()
-    artist = database.find_artist(name)
-    print(artist)
-    #try:
     available_artwork = database.display_avail_by_artist(artist)
     if available_artwork:
         print(available_artwork)
@@ -48,45 +41,40 @@ def display_available_work_by_an_artist():
     else:
         raise ArtError('There are no available pieces of art by this artist on file')
 
-    #except ArtError as e:
-     #   print(e)
 
 def show_all_artwork_by_one_artist():
-    name = ui.get_string('Enter name of artist whose work you would like to see ')
-    name = name.title()
-    artist = database.find_artist(name) #retrieve artist object -DO I need to do this?
-    print(artist)
-    print(artist.id)
+    name_of_artist = ui.get_string('Enter name of artist whose work you would like to see ')
+    name = name_of_artist.title()
+    artist = database.find_artist(name) #retrieve artist object 
 
-    #try:
-        #artwork_by_artist = database.show_artwork_by_one_artist(artist) #original
     artwork_by_artist = database.show_artwork_by_one_artist(artist)
-    print(artwork_by_artist)
-    if artwork_by_artist: #if any artwork by that artist is found
+    if artwork_by_artist: #if any artwork by that artist is found, print it
         for row in artwork_by_artist:
             print(row)
     else:
-        print('There are no pieces of art by this artist on file')
-    #except ArtError as e:
-     #   print(e)
+        print('There are no pieces of art by this artist on file')    
 
 
 def change_availability():
-    name = ui.get_string('Enter name of artwork to change  to Not available : ')
-    name = name.title()
-    #artwork = get_artwork_by_name(name)
-    try:
-        database.change_availability(name) #send to database to delete that artwork
-        print('Changed availability')
-    except ArtError as e:
-        print(e)
+    name_of_artwork = ui.get_string('Enter name of artwork to change to Not available/Sold  ')
+    name_of_artwork = name_of_artwork.title()
+    artwork = get_artwork_by_name(name_of_artwork)#get the artwork object
+    #see if artwork is already sold
+    if database.check_availability(artwork):
+        try:
+            database.change_availability(artwork) 
+            print('Changed availability')
+        except ArtError as e:
+            print(e)
+    else:
+        print('That artwork is already sold')
     
 
 def delete_artwork():
-    name = ui.get_string('Enter name of artwork to delete')
-    name = name.title()
+    name_of_artwork = ui.get_string('Enter name of artwork to delete')
+    name_of_artwork = name_of_artwork.title()
     try:
-        database.delete_artwork(name) #send to database to delete that artowrk
+        database.delete_artwork(name_of_artwork) #send to database to delete that artowrk
         print('Deleted artwork')
     except ArtError as e:
         print(e)
@@ -96,18 +84,14 @@ def show_all_artists():
     for artist in artists:
         print(artist)
 
-def search_for_artwork_by_name():
-    name = ui.get_string('Enter name of artwork')
-    #artwork = database.artwork_search(name)
-    artwork = database.artwork_search(name)
-    #artwork = Artwork.get_or_none(Artwork.name==name)
-    print(artwork)
-    #artwork = database.artwork_search(word)
-    #print(artwork)
 
+def show_all_artwork():
+    artworks = database.show_all_artwork()
+    for artwork in artworks:
+        print(artwork)
 
-def get_artwork_by_name(name):
-    return Artwork.get_or_none(Artwork.name == name)
+def get_artwork_by_name(name_of_artwork):
+    return Artwork.get_or_none(Artwork.name_of_artwork == name_of_artwork)
 
 def get_artist_by_name():
     name = ui.get_string('Enter name of artist')
