@@ -32,6 +32,7 @@ def add_artwork():
 def display_available_work_by_one_artist():
     name_of_artist = ui.get_string('Enter name of artist ')
     artist = database.find_artist(name_of_artist) #retrieve the artist object
+    print(artist)
     available_artwork = database.display_avail_by_artist(artist) #send that artist to database to retrieve their work
     if available_artwork:
         for row in available_artwork:
@@ -56,7 +57,7 @@ def show_all_artwork_by_one_artist():
 def change_availability():
     name_of_artwork = ui.get_string('Enter name of artwork to change to Not available/Sold  ')
     artwork = get_artwork_by_name(name_of_artwork)#get the artwork object
-    print(artwork) # I can see True go to False here after changing an artwork
+    #print(artwork) # I can see True go to False here after changing an artwork
     #print(artwork.is_available) #should print True or False - but is not
     database.change_availability(artwork) #send to db to change availability to False
     #print('Changed availability')

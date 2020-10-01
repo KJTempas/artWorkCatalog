@@ -34,7 +34,7 @@ def change_availability(artwork):
 
 def display_avail_by_artist(artist):
     try: 
-        available_artwork = Artwork.select().where(Artwork.artist == artist) & (Artwork.is_available == True)    
+        available_artwork = Artwork.select().where((Artwork.artist == artist) & (Artwork.is_available == True))   
         return list(available_artwork)
     except ArtError as e:
         print(e)
