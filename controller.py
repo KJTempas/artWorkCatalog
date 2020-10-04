@@ -61,7 +61,6 @@ def delete_artwork():
     name_of_artwork = ui.get_string('Enter name of artwork to delete')
     try:
         database.delete_artwork(name_of_artwork) #send to database to delete that artowrk
-        print('Deleted artwork')
     except ArtError as e:
         print(e)
     
