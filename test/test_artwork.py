@@ -6,7 +6,7 @@ import database_config
 database_config.database_path = 'test_art.sqlite'
 import database
 
-import controller
+import controller #these all need to imported for use in testing
 from models import Artist, Artwork
 from database import ArtError, IntegrityError
 
@@ -18,7 +18,7 @@ class TestArtwork(TestCase):
         Artwork.delete().execute()
         
 
-    def add_test_data(self): #helper/utility method
+    def add_test_data(self): #helper/utility method; call to populate tables with data
         self.artist1 = Artist(name = 'Auguste Rodin', email = 'ar@gmail.com')
         self.artist2 = Artist(name = 'Paul Cezanne', email = 'pc@gmail.com')
         self.artist1.save()
@@ -35,14 +35,13 @@ class TestArtwork(TestCase):
         artist.save()
         self.assertEqual(1, database.artist_count())
     
-   # def test_add_artist_using_database_file_method(self):
-    #    name = 'Quinn Tempas'
-     #   email = 'qt@gmail.com'
-      #  database. add_artist(name,email)
-       # self.assertEqual(1, database.artist_count)
+    def test_add_artist_using_database_file_method(self):
+        name = 'Quinn Tempas'
+        email = 'qt@gmail.com'
+        database. add_artist(name,email)
+        self.assertEqual(1, database.artist_count())
 
     def test_add_artist_not_unique(self):
-        #Artist.delete().execute()
         self.add_test_data() #should violate unique constraint for name and/or email
         artist3 = Artist(name = 'Paul Cezanne', email = 'pc@gmail.com') #both name and email not unique
         artist4 = Artist(name = 'Saul Cezanne', email = 'pc@gmail.com') #email not unique
@@ -51,16 +50,19 @@ class TestArtwork(TestCase):
             artist3.save()
             artist4.save()
             artist5.save()
-           
-   # def test_add_artist_no_name(self):
-    #    artist6 = Artist(name = 'Not known', email = 'test@gmail.com')
-     #   with self.assertRaises(ArtError):
-      #      artist6.save()
 
     def test_add_artwork(self):
         self.add_test_data() #to make sure artist is in the artist table
         artwork = Artwork(artist = 'Paul Cezanne', name_of_artwork='The Blue Vase', price = 600)
         artwork.save()
+        self.assertEqual(3, database.artwork_count_all())
+
+    def test_add_artwork_using_database_method(self):
+        self.add_test_data() #adds 2 artworks to table
+        artist = 'Paul Cezanne'
+        name_of_artwork='The Blue Vase'
+        price = 600
+        database.add_artwork(artist, name_of_artwork, price) #adding a 3rd artwork
         self.assertEqual(3, database.artwork_count_all())
 
     def test_add_artwork_not_unique(self):
@@ -74,23 +76,23 @@ class TestArtwork(TestCase):
         artwork.save()
         self.assertTrue(artwork.is_available)
     
+    def test_change_artwork_status(self):
+        self.add_test_data()
+        self.artwork1.is_available = False
+        self.assertFalse(self.artwork1.is_available)
 
     def test_delete_artwork(self):
         self.add_test_data() #call helper method above to add data - 2 in artwork table
         database.delete_artwork('The Bathers') #should be 1 after delete
         self.assertEqual(1, database.artwork_count_all()) #count the number of artwork pieces in the artwork table
        
-    #def test_delete_artwork_not_in_table_raises_error(self):
-     #   self.add_test_data() #call helper method above to add data - 2 in artwork table
-        ##artwork = Artwork(artist = 'Not known', name = 'Not known', price = 0)
-      #  with self.assertRaises(ArtError):
-       #     database.delete_artwork('Testing123') 
+       #this method does not work, and I don't know why
+   # def test_delete_artwork_not_in_table_raises_error(self):
+    #    self.add_test_data() #call helper method above to add data - 2 in artwork table
+     #   with self.assertRaises(ArtError):#try to delete artwork by name that is not in the database should raise an error
+      #      database.delete_artwork('Testing123') 
         
-    def test_change_artwork_status(self):
-        self.add_test_data()
-        self.artwork1.is_available = False
-        #database.change_availability(self.artwork1.is_available == False)
-        self.assertFalse(self.artwork1.is_available)
+    
        
     def test_show_all_artists(self):
         self.add_test_data() #test data has 2 artists
@@ -112,6 +114,14 @@ class TestArtwork(TestCase):
         artworks = database.show_artwork_by_one_artist('Not known') #artworks should be an empty list
         list(artworks) #make a list so can see length
         self.assertEqual(0, len(artworks))
+
+    def test_display_avail_by_one_artist(self):
+        self.add_test_data()
+        artwork = Artwork(artist = 'Paul Cezanne', name_of_artwork='The Blue Vase', price = 600)
+        artwork.save()  #add another work of art by Paul Cezanne - so now 2 - both available
+        database.change_availability(self.artwork2) #so now only 1 artwork by Cezanne is available
+        artworks = database.display_avail_by_artist('Paul Cezanne')
+        self.assertEqual(1, len(artworks))
 
     def test_artwork_count_all(self):
         self.add_test_data()
